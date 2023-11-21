@@ -1,0 +1,31 @@
+- type: vessel
+  id: Felonix
+  name: NSF Felonix
+  description: A large patrol vessel capable of carrying up to 3 smaller faster attack ships. the flagship vessel of security.
+  price: 75000
+  category: Large
+  group: Security
+  shuttlePath: /Maps/Shuttles/felonix.yml
+
+- type: gameMap
+  id: Felonix
+  mapName: 'NSF Felonix'
+  mapPath: /Maps/Shuttles/felonix.yml
+  minPlayers: 0
+  stations:
+    Felonix:
+      stationProto: StandardFrontierSecurityVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'NSF14 Felonix {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          overflowJobs: []
+          availableJobs:
+            PrisonGuard: [ 0, 0 ]
+            SecurityOfficer: [ 0, 0 ]
+            Warden: [ 0, 0 ]
+            Brigmedic: [ 0, 0 ]
+            Prisoner: [ 0, 0 ]
