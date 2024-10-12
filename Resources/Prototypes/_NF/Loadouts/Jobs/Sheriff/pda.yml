@@ -1,0 +1,5 @@
+- type: loadout
+  id: SheriffSheriffPDA
+  equipment:
+    id: SheriffPDA
+    

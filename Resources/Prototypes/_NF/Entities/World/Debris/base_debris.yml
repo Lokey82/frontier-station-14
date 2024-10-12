@@ -1,0 +1,8 @@
+﻿- type: entity
+  id: NFBaseDebris
+  abstract: true
+  components:
+    - type: OwnedDebris
+    - type: LocalityLoader
+    - type: GCAbleObject
+      queue: SpaceDebris

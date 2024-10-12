@@ -1,37 +1,102 @@
-- type: salvageDungeonMod
-  id: Everything
-  proto: Everything
-  biomes:
-    - Caves
-    - Grasslands
-    - Lava
-    - Snow
+# Biome mods
+- type: salvageBiomeMod
+  id: Shadow
+  desc: salvage-biome-mod-shadow
+#  cost: 2 # Frontier
+  biome: Shadow
+
+# Dungeon mods
+#- type: salvageDungeonMod
+  #id: Everything
+  #proto: Everything
+  #biomes:
+    #- Caves
+    #- Grasslands
+    #- Lava
+    #- Snow
+    #- Shadow
 
 - type: salvageDungeonMod
   id: CaveFactory
   proto: CaveFactory
+  desc: salvage-dungeon-mod-cave-factory
   biomes:
     - Caves
     - Grasslands
+    - Shadow
 
 - type: salvageDungeonMod
   id: MedSci
   proto: MedSci
+  desc: salvage-dungeon-mod-med-sci
   biomes:
     - Caves
     - Grasslands
     - Snow
+    - Shadow
 
 - type: salvageDungeonMod
   id: FactoryDorms
   proto: FactoryDorms
+  desc: salvage-dungeon-mod-factory-dorms
   biomes:
     - Caves
     - Grasslands
     - Lava
+    - Shadow
 
 - type: salvageDungeonMod
   id: LavaMercenary
   proto: LavaMercenary
+  desc: salvage-dungeon-mod-lava-mercenary
   biomes:
     - Lava
+    - Shadow
+
+- type: salvageDungeonMod
+  id: VirologyLab
+  proto: VirologyLab
+  desc: salvage-dungeon-mod-virology-lab
+  biomes:
+    - Caves
+    - Grasslands
+    - Lava
+    - Snow
+    - Shadow
+
+- type: salvageDungeonMod
+  id: SalvageOutpost
+  proto: SalvageOutpost
+  desc: salvage-dungeon-mod-salvage-outpost
+  biomes:
+    - Caves
+    - Grasslands
+    - Lava
+    - Snow
+    - Shadow
+
+# Time mods -> at least 1 required
+# Standard time, no description, no need to show.
+- type: salvageTimeMod
+  id: StandardTime
+  desc: salvage-time-mod-standard-time
+  hidden: true
+
+- type: salvageTimeMod
+  id: RushTime
+  desc: salvage-time-mod-rush
+  minDuration: 630 # Frontier
+  maxDuration: 840 # Frontier
+  cost: 1
+
+# Weather mods
+- type: salvageWeatherMod
+  id: SnowfallHeavy
+  desc: salvage-weather-mod-heavy-snowfall
+  weather: SnowfallHeavy
+  cost: 1
+
+- type: salvageWeatherMod
+  id: Rain
+  desc: salvage-weather-mod-rain
+  weather: Rain

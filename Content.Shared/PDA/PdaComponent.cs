@@ -11,6 +11,7 @@ namespace Content.Shared.PDA
     {
         public const string PdaIdSlotId = "PDA-id";
         public const string PdaPenSlotId = "PDA-pen";
+        public const string PdaPaiSlotId = "PDA-pai";
         public const string PdaBookSlotId = "PDA-book";
 
         /// <summary>
@@ -25,6 +26,9 @@ namespace Content.Shared.PDA
         [DataField("penSlot")]
         public ItemSlot PenSlot = new();
 
+        [DataField("paiSlot")]
+        public ItemSlot PaiSlot = new();
+
         [DataField("bookSlot")]
         public ItemSlot BookSlot = new();
 
@@ -37,7 +41,11 @@ namespace Content.Shared.PDA
         [ViewVariables] public EntityUid? ContainedId;
         [ViewVariables] public bool FlashlightOn;
 
-        [ViewVariables] public string? OwnerName;
+        [ViewVariables(VVAccess.ReadWrite)] public string? OwnerName;
+        // The Entity that "owns" the PDA, usually a player's character.
+        // This is useful when we are doing stuff like renaming a player and want to find their PDA to change the name
+        // as well.
+        [ViewVariables(VVAccess.ReadWrite)] public EntityUid? PdaOwner;
         [ViewVariables] public string? StationName;
         [ViewVariables] public string? StationAlertLevel;
         [ViewVariables] public Color StationAlertColor = Color.White;

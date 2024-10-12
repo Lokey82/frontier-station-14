@@ -1,112 +1,163 @@
 - type: department
   id: Cargo
+  name: department-Cargo
   description: department-Cargo-description
   color: "#A46106"
-  roles:
-  - CargoTechnician
-  - Quartermaster
-  - SalvageSpecialist
+  weight: -90
+  primary: false
+  editorHidden: true # Frontier
 
 - type: department
   id: Civilian
+  name: department-Civilian
   description: department-Civilian-description
   color: "#9FED58"
+  weight: 0 # Frontier: -10<0 accounted for in jobs
   roles:
   - Bartender
-  - Borg
   - Botanist
   - Boxer
   - Chaplain
   - Chef
   - Clown
-  - HeadOfPersonnel
-  - Janitor
+#  - HeadOfPersonnel
   - Lawyer
   - Librarian
   - Mime
   - Musician
   - Passenger
   - Reporter
+  - Visitor
   - Zookeeper
   - ServiceWorker
-  - Valet ##nyanojobs below
-  - MartialArtist
-  - MailCarrier
-  - Gladiator
+  - Contractor # Frontier
   - Mercenary # Frontier
   - Pilot # Frontier
-  - StationTrafficController # Frontier
+  - Captain # Frontier
+  - ChiefEngineer # Frontier
+  - AtmosphericTechnician # Frontier
+  - StationEngineer # Frontier
+  - TechnicalAssistant # Frontier
+  - ResearchDirector # Frontier
+  - Scientist # Frontier
+  - ResearchAssistant # Frontier
+  - Quartermaster # Frontier
+  - CargoTechnician # Frontier
+  - SalvageSpecialist # Frontier
+
+- type: department
+  id: CentralCommand
+  name: department-CentralCommand
+  description: department-CentralCommand-description
+  color: "#0c344d"
+  roles:
+  - CentralCommandOfficial
+  - CBURN
+  - ERTLeader
+  - ERTChaplain
+  - ERTJanitor
+  - ERTMedical
+  - ERTSecurity
+  - ERTEngineer
+  - DeathSquad
+  - ERTMailCarrier # Frontier
+  editorHidden: true
+  weight: 120
 
 - type: department
   id: Command
+  name: department-Command
   description: department-Command-description
   color: "#334E6D"
   roles:
-  - Captain
+  # - Captain # Frontier
+  # - ChiefEngineer # Frontier
+  # - ChiefMedicalOfficer # Frontier
+  - HeadOfPersonnel # Frontier: Not shown but needed here for playtime
+  - HeadOfSecurity # Frontier: Not shown but needed here for playtime
+  # - ResearchDirector # Frontier
+  # - Quartermaster # Frontier
   - CentralCommandOfficial
-  - ChiefEngineer
-  - ChiefMedicalOfficer
-  - HeadOfPersonnel
-  - HeadOfSecurity
-  - ResearchDirector
-  - Quartermaster
+  - CBURN
+  - ERTLeader
+  - ERTChaplain
+  - ERTJanitor
+  - ERTMedical
+  - ERTSecurity
+  - ERTEngineer
+  - DeathSquad
+  - StationRepresentative # Frontier
+  - Sheriff  # Frontier
+  - StationTrafficController # Frontier
+  - ERTMailCarrier # Frontier
+  primary: false
+  weight: 2 # Frontier: 100<2 - accounted for in jobs
 
 - type: department
   id: Engineering
+  name: department-Engineering
   description: department-Engineering-description
   color: "#EFB341"
-  roles:
-  - AtmosphericTechnician
-  - ChiefEngineer
-  - SeniorEngineer
-  - StationEngineer
-  - TechnicalAssistant
+  weight: -94
+  primary: false
+  editorHidden: true # Frontier
 
 - type: department
   id: Medical
+  name: department-Medical
   description: department-Medical-description
   color: "#52B4E9"
-  roles:
-  - Chemist
-  - ChiefMedicalOfficer
-  - MedicalDoctor
-  - MedicalIntern
-  - Psychologist
-  - Paramedic
-  - SeniorPhysician
+  weight: -93
+  primary: false
+  editorHidden: true # Frontier
 
 - type: department
   id: Security
+  name: department-Security
   description: department-Security-description
-  color: "#DE3A3A"
+  color: "#5C7D4D" # Frontier: DE3A3A<5C7D4D
+  weight: 1 # Frontier: 20<1 - accounted for in jobs
   roles:
-  - HeadOfSecurity
-  - SecurityCadet
-  - SecurityOfficer
-  - SeniorOfficer
-  - Detective
-  - Warden
+  - Detective # Frontier - No Longer Usable
+  - HeadOfSecurity # Frontier - No Longer Usable
+  - SecurityCadet # Frontier - No Longer Usable
+  - SecurityOfficer # Frontier - No Longer Usable
+  - Warden # Frontier - No Longer Usable
   - PrisonGuard ##nyano
-  - Prisoner ##nyano
-  - Brigmedic
-  - SecurityGuard # Frontier
+  - Brigmedic # Frontier
+#  - SecurityGuard # Frontier
+  - NFDetective # Frontier
+  - Cadet # Frontier
+  - Deputy # Frontier
+  - Bailiff # Frontier
+  - Sheriff # Frontier
+  - SeniorOfficer # Frontier
+  - PublicAffairsLiaison # Frontier
 
 - type: department
   id: Science
+  name: department-Science
   description: department-Science-description
   color: "#D381C9"
+  weight: -92
+  primary: false
+  editorHidden: true # Frontier
+
+- type: department
+  id: Silicon
+  name: department-Silicon
+  description: department-Silicon-description
+  color: "#D381C9"
   roles:
-  - ResearchDirector
-  - SeniorResearcher
-  - Scientist
-  - ResearchAssistant
+  - Borg
+  - StationAi
+  editorHidden: true # Frontier
 
 - type: department
   id: Specific
+  name: department-Specific
   description: department-Specific-description
   color: "#9FED58"
-  roles:
-  - Boxer
-  - Reporter
-  - Zookeeper
-  - Psychologist
+  weight: -91
+  primary: false
+  editorHidden: true # Frontier

@@ -1,10 +1,11 @@
-﻿- type: entity
-  id: BaseAnimalOrgan
+- type: entity
+  id: BaseAnimalOrganUnGibbable
   parent: BaseItem
   abstract: true
   components:
   - type: Organ
   - type: Food
+#    quality: Nasty # Frontier
   - type: Sprite
     sprite: Mobs/Species/Human/organs.rsi
   - type: StaticPrice
@@ -23,12 +24,18 @@
     tags:
       - Meat
 
+- type: entity
+  id: BaseAnimalOrgan
+  parent: BaseAnimalOrganUnGibbable
+  abstract: true
+  components:
+  - type: Gibbable
 
 - type: entity
   id: OrganAnimalLungs
   parent: BaseAnimalOrgan
   name: lungs
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     layers:
@@ -59,7 +66,7 @@
   id: OrganAnimalStomach
   parent: BaseAnimalOrgan
   name: stomach
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: stomach
@@ -82,10 +89,21 @@
     - id: Drink
 
 - type: entity
+  id: OrganMouseStomach
+  parent: OrganAnimalStomach
+  name: stomach
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 30
+
+- type: entity
   id: OrganAnimalLiver
   parent: BaseAnimalOrgan
   name: liver
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: liver
@@ -101,7 +119,7 @@
   id: OrganAnimalHeart
   parent: BaseAnimalOrgan
   name: heart
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: heart-on
@@ -111,6 +129,7 @@
     metabolizerTypes: [ Animal ]
     groups:
     - id: Medicine
+    - id: Cryogenic # Frontier
     - id: Poison
     - id: Narcotic
 
@@ -118,7 +137,7 @@
   id: OrganAnimalKidneys
   parent: BaseAnimalOrgan
   name: kidneys
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     layers:

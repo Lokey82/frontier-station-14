@@ -1,0 +1,10 @@
+# Raw mats
+- type: latheRecipe
+  id: Durathread
+  result: MaterialDurathread1
+  completetime: 0
+  category: NFMaterials
+  applyMaterialDiscount: false
+  materials:
+    Plastic: 100
+    Cloth: 100

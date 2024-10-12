@@ -16,10 +16,18 @@ namespace Content.Server.Warps
         public bool Follow;
 
         /// <summary>
-        /// If true, will sync warp point name with a station name.
+        /// Frontier - If true, will sync warp point name with a station name.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("useStationName")]
         public bool UseStationName;
+
+        /// <summary>
+        /// Frontier - If true, warp point can only be used by admins
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("adminOnly")]
+        public bool AdminOnly;
+        // End Frontier
     }
 }

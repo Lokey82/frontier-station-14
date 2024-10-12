@@ -8,11 +8,10 @@
     sprite: Objects/Materials/Sheets/other.rsi
   - type: Item
     sprite: Objects/Materials/Sheets/other.rsi
-    size: 30
+    size: Normal
   - type: Tag
     tags:
     - Sheet
-    - DroneUsable
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -23,6 +22,10 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: SolutionContainerManager
+    solutions:
+      paper:
+        canReact: false
 
 - type: entity
   parent: SheetOtherBase
@@ -37,6 +40,10 @@
     - paper
     - paper_2
     - paper_3
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Paper: 100
   - type: Sprite
     state: paper_3
     layers:
@@ -45,6 +52,15 @@
   - type: Item
     heldPrefix: paper
   - type: Appearance
+  - type: Extractable
+    grindableSolutionName: paper
+  - type: SolutionContainerManager
+    solutions:
+      paper:
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 3
+
 
 - type: entity
   parent: SheetPaper
@@ -56,9 +72,9 @@
     state: paper
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
+# New Frontiers - FuelVend - Expensive plasma sheets
+# This code is licensed under AGPLv3. See LICENSE
 - type: entity
   parent: SheetOtherBase
   id: SheetPlasma
@@ -92,11 +108,24 @@
         reagents:
         - ReagentId: Plasma
           Quantity: 10
+        canReact: false
   - type: Tag
     tags:
     - Sheet
   - type: StackPrice
     price: 10
+    vendPrice: 1200 # Frontier: FuelVend price
+# End of modified code
+
+- type: entity
+  parent: SheetPlasma
+  id: SheetPlasma10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: plasma
+  - type: Stack
+    count: 10
 
 - type: entity
   parent: SheetPlasma
@@ -108,8 +137,6 @@
     state: plasma
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: SheetOtherBase
@@ -121,7 +148,6 @@
     tags:
     - Plastic
     - Sheet
-    - DroneUsable
   - type: Material
   - type: PhysicalComposition
     materialComposition:
@@ -140,8 +166,18 @@
       map: ["base"]
   - type: Item
     heldPrefix: plastic
-    size: 30
   - type: Appearance
+  - type: Extractable
+    grindableSolutionName: plastic
+  - type: SolutionContainerManager
+    solutions:
+      plastic:
+        reagents:
+        - ReagentId: Oil
+          Quantity: 1 # Frontier: 5<1 (consistency with plastic reaction)
+        - ReagentId: Phosphorus
+          Quantity: 1 # Frontier: 5<1 (consistency with plastic reaction)
+        canReact: false
 
 - type: entity
   parent: SheetPlastic
@@ -151,8 +187,6 @@
   components:
   - type: Sprite
     state: plastic
-  - type: Item
-    size: 10
   - type: Stack
     count: 10
 
@@ -164,11 +198,11 @@
   components:
   - type: Sprite
     state: plastic
-  - type: Item
-    size: 1
   - type: Stack
     count: 1
 
+# New Frontiers - FuelVend - Expensive uranium sheets
+# This code is licensed under AGPLv3. See LICENSE
 - type: entity
   parent: [SheetOtherBase, FoodBase]
   id: SheetUranium
@@ -204,7 +238,13 @@
       food:
         reagents:
         - ReagentId: Uranium
-          Quantity: 10
+          Quantity: 8
+        - ReagentId: Radium
+          Quantity: 2
+        canReact: false
+  - type: StaticPrice # Frontier: FuelVend price (use inheritance from FoodBase)
+    vendPrice: 2500 # Frontier: FuelVend price
+# End of modified code
 
 - type: entity
   parent: SheetUranium
@@ -214,8 +254,6 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: SheetOtherBase
@@ -231,7 +269,6 @@
     - type: Tag
       tags:
       - Sheet
-      - DroneUsable
     - type: Material
     - type: PhysicalComposition
       materialComposition:
@@ -246,7 +283,17 @@
     - type: Item
       sprite: Objects/Materials/Sheets/meaterial.rsi
       heldPrefix: meat
-    - type: Appearance
+    - type: Extractable
+      grindableSolutionName: meatsheet
+    - type: SolutionContainerManager
+      solutions:
+        meatsheet:
+          reagents:
+          - ReagentId: Protein
+            Quantity: 7
+          - ReagentId: Fat
+            Quantity: 3
+          canReact: false
 
 - type: entity
   parent: MaterialSheetMeat
@@ -257,5 +304,3 @@
       state: meat
     - type: Stack
       count: 1
-    - type: Item
-      size: 1

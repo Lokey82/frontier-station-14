@@ -1,5 +1,6 @@
 using Content.Server.Cargo.Systems;
 using Content.Server.Emp;
+using Content.Shared.Emp; // Frontier: Upstream - #28984
 using Content.Server.Power.Components;
 using Content.Shared.Examine;
 using Content.Shared.Rejuvenate;
@@ -20,6 +21,7 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<BatteryComponent, RejuvenateEvent>(OnBatteryRejuvenate);
             SubscribeLocalEvent<BatteryComponent, PriceCalculationEvent>(CalculateBatteryPrice);
             SubscribeLocalEvent<BatteryComponent, EmpPulseEvent>(OnEmpPulse);
+            SubscribeLocalEvent<BatteryComponent, EmpDisabledRemoved>(OnEmpDisabledRemoved); // Frontier: Upstream - #28984
 
             SubscribeLocalEvent<NetworkBatteryPreSync>(PreSync);
             SubscribeLocalEvent<NetworkBatteryPostSync>(PostSync);
@@ -62,9 +64,9 @@ namespace Content.Server.Power.EntitySystems
             var enumerator = AllEntityQuery<PowerNetworkBatteryComponent, BatteryComponent>();
             while (enumerator.MoveNext(out var netBat, out var bat))
             {
-                DebugTools.Assert(bat.Charge <= bat.MaxCharge && bat.Charge >= 0);
+                DebugTools.Assert(bat.CurrentCharge <= bat.MaxCharge && bat.CurrentCharge >= 0);
                 netBat.NetworkBattery.Capacity = bat.MaxCharge;
-                netBat.NetworkBattery.CurrentStorage = bat.Charge;
+                netBat.NetworkBattery.CurrentStorage = bat.CurrentCharge;
             }
         }
 
@@ -85,7 +87,7 @@ namespace Content.Server.Power.EntitySystems
             {
                 if (!comp.AutoRecharge) continue;
                 if (batt.IsFullyCharged) continue;
-                SetCharge(uid, batt.CurrentCharge + comp.AutoRechargeRate * frameTime, batt);
+                TrySetCharge(uid, batt.CurrentCharge + comp.AutoRechargeRate * frameTime, batt); // Frontier: Upstream - #28984
             }
         }
 
@@ -100,7 +102,20 @@ namespace Content.Server.Power.EntitySystems
         private void OnEmpPulse(EntityUid uid, BatteryComponent component, ref EmpPulseEvent args)
         {
             args.Affected = true;
+            args.Disabled = true; // Frontier: Upstream - #28984
             UseCharge(uid, args.EnergyConsumption, component);
+        }
+
+        /// <summary>
+        /// if a disabled battery is put into a recharged, allow the recharger to start recharging again after the disable ends.
+        /// </summary>
+        private void OnEmpDisabledRemoved(EntityUid uid, BatteryComponent component, ref EmpDisabledRemoved args) // Frontier: Upstream - #28984
+        {
+            if (!TryComp<ChargingComponent>(uid, out var charging))
+                return;
+
+            var ev = new ChargerUpdateStatusEvent();
+            RaiseLocalEvent(charging.ChargerUid, ref ev);
         }
 
         public float UseCharge(EntityUid uid, float value, BatteryComponent? battery = null)
@@ -108,10 +123,10 @@ namespace Content.Server.Power.EntitySystems
             if (value <= 0 ||  !Resolve(uid, ref battery) || battery.CurrentCharge == 0)
                 return 0;
 
-            var newValue = Math.Clamp(0, battery.CurrentCharge - value, battery._maxCharge);
-            var delta = newValue - battery.Charge;
-            battery.Charge = newValue;
-            var ev = new ChargeChangedEvent(battery.CurrentCharge, battery._maxCharge);
+            var newValue = Math.Clamp(0, battery.CurrentCharge - value, battery.MaxCharge);
+            var delta = newValue - battery.CurrentCharge;
+            battery.CurrentCharge = newValue;
+            var ev = new ChargeChangedEvent(battery.CurrentCharge, battery.MaxCharge);
             RaiseLocalEvent(uid, ref ev);
             return delta;
         }
@@ -121,13 +136,13 @@ namespace Content.Server.Power.EntitySystems
             if (!Resolve(uid, ref battery))
                 return;
 
-            var old = battery._maxCharge;
-            battery._maxCharge = Math.Max(value, 0);
-            battery.Charge = Math.Min(battery.Charge, battery._maxCharge);
-            if (MathHelper.CloseTo(battery._maxCharge, old))
+            var old = battery.MaxCharge;
+            battery.MaxCharge = Math.Max(value, 0);
+            battery.CurrentCharge = Math.Min(battery.CurrentCharge, battery.MaxCharge);
+            if (MathHelper.CloseTo(battery.MaxCharge, old))
                 return;
 
-            var ev = new ChargeChangedEvent(battery.CurrentCharge, battery._maxCharge);
+            var ev = new ChargeChangedEvent(battery.CurrentCharge, battery.MaxCharge);
             RaiseLocalEvent(uid, ref ev);
         }
 
@@ -136,12 +151,12 @@ namespace Content.Server.Power.EntitySystems
             if (!Resolve(uid, ref battery))
                 return;
 
-            var old = battery.Charge;
-            battery.Charge = MathHelper.Clamp(value, 0, battery._maxCharge);
-            if (MathHelper.CloseTo(battery.Charge, old))
+            var old = battery.CurrentCharge;
+            battery.CurrentCharge = MathHelper.Clamp(value, 0, battery.MaxCharge);
+            if (MathHelper.CloseTo(battery.CurrentCharge, old))
                 return;
 
-            var ev = new ChargeChangedEvent(battery.CurrentCharge, battery._maxCharge);
+            var ev = new ChargeChangedEvent(battery.CurrentCharge, battery.MaxCharge);
             RaiseLocalEvent(uid, ref ev);
         }
 
@@ -150,10 +165,22 @@ namespace Content.Server.Power.EntitySystems
         /// </summary>
         public bool TryUseCharge(EntityUid uid, float value, BatteryComponent? battery = null)
         {
-            if (!Resolve(uid, ref battery, false) || value > battery.Charge)
+            if (!Resolve(uid, ref battery, false) || value > battery.CurrentCharge)
                 return false;
 
             UseCharge(uid, value, battery);
+            return true;
+        }
+
+        /// <summary>
+        ///     Like SetCharge, but checks for conditions like EmpDisabled before executing
+        /// </summary>
+        public bool TrySetCharge(EntityUid uid, float value, BatteryComponent? battery = null) // Frontier: Upstream - #28984
+        {
+            if (!Resolve(uid, ref battery, false) || HasComp<EmpDisabledComponent>(uid))
+                return false;
+
+            SetCharge(uid, value, battery);
             return true;
         }
 

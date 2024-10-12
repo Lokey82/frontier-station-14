@@ -1,27 +1,16 @@
 - type: entity
-  parent: CrateBaseWeldable
+  parent: [BaseStructureLockImmuneToEmag, BaseStructureAccessReaderImmuneToEmag, CrateBaseWeldable]
   id: CrateTradeBaseSecure
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: TradeCrate
-  - type: Lock
   - type: AccessReader
-    access: [[""]]
+    access: [["NuclearOperative"]]
   - type: Icon
     sprite: Structures/Storage/Crates/secure.rsi
     state: icon
   - type: Sprite
     sprite: Structures/Storage/Crates/secure.rsi
-    layers:
-    - state: base
-    - state: closed
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
-    - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
-      shader: unshaded
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: StrongMetallic
@@ -43,3 +32,6 @@
     spread: 90
   - type: StaticPrice
     price: 0
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-inanimate
+    weight: 0.01 # 100 trade crates = 1 animal

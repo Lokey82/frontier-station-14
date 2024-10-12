@@ -8,15 +8,17 @@
 
 # Shuttle Notes:
 # 
-
 - type: vessel
   id: harbormaster
-  name: NC Harbormaster
-  description: A small tugboat.
-  price: 29500
+  name: LVHI Harbormaster
+  description: A small tugboat. Manufactured by Langstad-Voigt Heavy Industries.
+  price: 27000 # ~23375$ on mapinit + ~3500$ from 15% markup
   category: Small
-  group: Civilian
+  group: Shipyard
   shuttlePath: /Maps/_NF/Shuttles/harbormaster.yml
+  guidebookPage: ShipyardHarbormaster
+  class:
+  - Civilian
 
 - type: gameMap
   id: harbormaster
@@ -33,6 +35,7 @@
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationJobs
-          overflowJobs: []
           availableJobs:
+            Contractor: [ 0, 0 ]
             Pilot: [ 0, 0 ]
+            Mercenary: [ 0, 0 ]

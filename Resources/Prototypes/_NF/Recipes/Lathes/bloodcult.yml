@@ -1,0 +1,175 @@
+# Weapons
+- type: latheRecipe
+  id: RitualDagger
+  result: RitualDaggerPrinted
+  completetime: 1
+  category: Weapons
+  materials:
+    Bones: 100
+    Steel: 500
+
+- type: latheRecipe
+  id: EldritchBlade
+  result: EldritchBladePrinted
+  completetime: 1
+  category: Weapons
+  materials:
+    Bones: 200
+    Steel: 700
+    Plasteel: 500
+
+- type: latheRecipe
+  id: UnholyHalberd
+  result: UnholyHalberdPrinted
+  completetime: 1
+  category: Weapons
+  materials:
+    Bones: 1000
+    Steel: 1000
+    Plasteel: 1500
+
+- type: latheRecipe
+  id: WizardStaffMeleeBlood
+  result: WizardStaffMeleeBloodPrinted
+  completetime: 1
+  category: Weapons
+  materials:
+    Bones: 500
+    Plasteel: 500
+    Wood: 1500
+
+- type: latheRecipe
+  id: SpearBone
+  result: SpearBone
+  completetime: 1
+  category: Weapons
+  materials:
+    Bones: 400
+    Cloth: 100
+
+# Armor
+- type: latheRecipe
+  id: ClothingHeadHelmetCultJanitor
+  result: ClothingHeadHelmetCultJanitorPrinted
+  completetime: 1
+  category: ArmorNF
+  materials:
+    Bones: 200
+    Cloth: 100
+    Durathread: 100
+    Steel: 500
+    Plasteel: 500
+
+- type: latheRecipe
+  id: ClothingMaskCultJanitor
+  result: ClothingMaskCultJanitorPrinted
+  completetime: 1
+  category: ArmorNF
+  materials:
+    Bones: 200
+    Cloth: 100
+    Durathread: 100
+    Steel: 200
+    Plasteel: 200
+
+- type: latheRecipe
+  id: ClothingOuterCoatCultJanitor
+  result: ClothingOuterCoatCultJanitorPrinted
+  completetime: 1
+  category: ArmorNF
+  materials:
+    Bones: 1000
+    Cloth: 300
+    Durathread: 300
+    Steel: 1500
+    Plasteel: 1500
+
+- type: latheRecipe
+  id: ClothingHeadHelmetCult
+  result: ClothingHeadHelmetCultPrinted
+  completetime: 1
+  category: ArmorNF
+  materials:
+    Bones: 200
+    Cloth: 100
+    Durathread: 100
+    Steel: 500
+    Plasteel: 500
+
+- type: latheRecipe
+  id: ClothingOuterArmorCult
+  result: ClothingOuterArmorCultPrinted
+  completetime: 1
+  category: ArmorNF
+  materials:
+    Bones: 1000
+    Cloth: 300
+    Durathread: 300
+    Steel: 1500
+    Plasteel: 1500
+
+- type: latheRecipe
+  id: ClothingShoesCult
+  result: ClothingShoesCultPrinted
+  completetime: 1
+  category: ArmorNF
+  materials:
+    Bones: 200
+    Cloth: 100
+    Durathread: 100
+    Steel: 200
+    Plasteel: 200
+
+- type: latheRecipe
+  id: ClothingOuterCoatBloodCultRobes
+  result: ClothingOuterCoatBloodCultRobesPrinted
+  completetime: 1
+  category: ArmorNF
+  materials:
+    Bones: 200
+    Cloth: 600
+    Durathread: 600
+    Plasteel: 200
+
+- type: latheRecipe
+  id: ClothingHeadHelmetBone
+  result: ClothingHeadHelmetBonePrinted
+  completetime: 1
+  category: ArmorNF
+  materials:
+    Bones: 400
+
+- type: latheRecipe
+  id: ClothingOuterArmorBone
+  result: ClothingOuterArmorBonePrinted
+  completetime: 1
+  category: ArmorNF
+  materials:
+    Bones: 600
+
+- type: latheRecipe
+  id: ClothingBackpackMessengerBloodCult
+  result: ClothingBackpackMessengerBloodCultPrinted
+  completetime: 1
+  category: ArmorNF
+  materials:
+    Cloth: 400
+
+# Tools
+- type: latheRecipe
+  id: PumpkinLanternSmall
+  result: PumpkinLanternSmall
+  completetime: 1
+  category: Tools
+  materials:
+    Bones: 400
+    Steel: 200
+
+- type: latheRecipe
+  id: CandleRedInfinite
+  result: CandleRedInfinite
+  completetime: 1
+  category: Tools
+  materials:
+    Bones: 400
+    Durathread: 100

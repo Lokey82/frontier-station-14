@@ -1,0 +1,17 @@
+- type: loadout
+  id: SheriffClothingMaskSheriff
+  storage:
+    back:
+    - ClothingMaskGasSheriff
+
+- type: loadout
+  id: BrigmedicClothingMaskBrigmedic
+  storage:
+    back:
+    - ClothingMaskBreathMedicalSecurity
+
+- type: loadout
+  id: NfsdClothingMaskGasNfsd
+  storage:
+    back:
+    - ClothingMaskGasNfsd

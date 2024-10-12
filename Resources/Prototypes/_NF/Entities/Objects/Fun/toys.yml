@@ -24,44 +24,54 @@
   - type: StinkyTrait
 
 - type: entity
-  parent: [Soap, BasePlushie]
-  id: PlushieSlips
+  parent: BasePlushie
+  id: PlushieJanitor
   name: janitor plushie
   description: The silent cleaner, the one that you dont hear say "Weh"!
   components:
   - type: Sprite
     sprite: _NF/Objects/Fun/toys.rsi
-    state: plushie_slips
+    state: plushie_janitor
   - type: EmitSoundOnUse
     sound:
-      path: /Audio/Weapons/tap.ogg
+      path: /Audio/_NF/Effects/silence.ogg
   - type: EmitSoundOnLand
     sound:
-      path: /Audio/Weapons/tap.ogg
+      path: /Audio/_NF/Effects/silence.ogg
   - type: EmitSoundOnActivate
     sound:
-      path: /Audio/Weapons/tap.ogg
+      path: /Audio/_NF/Effects/silence.ogg
   - type: MeleeWeapon
     soundHit:
-      path: /Audio/Weapons/tap.ogg
-
-- type: entity
-  parent: ToySword
-  id: DBToySword
-  name: toy double-esword
-  noSpawn: true # This is just giving security more items to have to beat you up for.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/e_sword_double.rsi
-    layers:
-      - state: e_sword_double
-      - state: e_sword_double_blade
-        color: "#FFFFFF"
-        visible: false
-        shader: unshaded
-        map: [ "blade" ]
-  - type: Item
-    sprite: Objects/Weapons/Melee/e_sword_double.rsi
+      path: /Audio/_NF/Effects/silence.ogg
+  - type: Tag
+    tags:
+    - Soap
+  - type: Slippery
+    paralyzeTime: 0.7
+    launchForwardsMultiplier: 0.5
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        layer:
+        - SlipLayer
+        hard: false
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        density: 10
+        mask:
+        - ItemMask
 
 - type: entity
   id: PetRockCarrier
@@ -334,16 +344,16 @@
   components:
   - type: EmitSoundOnUse
     sound:
-      path: /Audio/_NF/Vulpikanin/bark.ogg
+      path: /Audio/DeltaV/Voice/Vulpkanin/dog_bark1.ogg
   - type: EmitSoundOnLand
     sound:
-      path: /Audio/_NF/Vulpikanin/bark.ogg
+      path: /Audio/DeltaV/Voice/Vulpkanin/dog_bark1.ogg
   - type: EmitSoundOnActivate
     sound:
-      path: /Audio/_NF/Vulpikanin/bark.ogg
+      path: /Audio/DeltaV/Voice/Vulpkanin/dog_bark1.ogg
   - type: MeleeWeapon
     soundHit:
-      path: /Audio/_NF/Vulpikanin/bark.ogg
+      path: /Audio/DeltaV/Voice/Vulpkanin/dog_bark1.ogg
 
 - type: entity
   parent: BasePlushieVulp
@@ -352,16 +362,6 @@
   - type: Sprite
     sprite: _NF/Objects/Fun/toys.rsi
     state: plushie_vulp
-
-- type: entity
-  parent: BasePlushieVulp
-  id: PlushieTrystan
-  name: office vulp plushie
-  description: The ones who yeeps!
-  components:
-  - type: Sprite
-    sprite: _NF/Objects/Fun/toys.rsi
-    state: plushie_trystan
 
 - type: entity
   parent: BasePlushieVulp
@@ -472,3 +472,50 @@
   - type: Sprite
     sprite: _NF/Objects/Fun/catplushie.rsi
     state: white
+
+- type: entity
+  name: Emotional support RPG
+  parent: WeaponLauncherRocket
+  id: WeaponLauncherRocketToy
+  suffix: Toy
+  description: A deactived RPG modified to only allow foam RPG warheads. "When in times of trouble and stressed out as can be, DON'T worry now because S.E.S.W.C has what you need!"
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+  - type: Gun
+    fireRate: 0.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - BulletFoam
+    proto: BulletFoamRPG
+    capacity: 1
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/DeltaV/Voice/Vulpkanin/dog_bark1.ogg
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance
+
+# Grown cap gun, in toys.yml for consistency with fake parent
+- type: entity
+  parent: [BaseC3SyndicateContrabandNoValue, RevolverCapGunFake] # Frontier: added BaseC3SyndicateContraband
+  id: RevolverCapGunFakeGrown
+  categories: [ HideSpawnMenu ]
+  suffix: Fake, Grown
+  components:
+  - type: RevolverAmmoProvider
+    proto: CartridgeMagnum # Base has AP rounds

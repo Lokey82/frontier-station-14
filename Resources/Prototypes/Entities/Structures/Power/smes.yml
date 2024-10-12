@@ -43,15 +43,22 @@
       examinable: true
       nodes:
         input:
-          !type:CableDeviceNode
-          nodeGroupID: HVPower
-        output:
           !type:CableTerminalPortNode
           nodeGroupID: HVPower
-    - type: BatteryCharger
+        output:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
+    - type: PowerMonitoringDevice
+      group: SMES
+      sourceNode: input
+      loadNode: output
+      collectionName: smes
+      sprite: Structures/Power/smes.rsi
+      state: static
+    - type: BatteryDischarger
       voltage: High
       node: output
-    - type: BatteryDischarger
+    - type: BatteryCharger
       voltage: High
       node: input
     - type: PowerNetworkBattery
@@ -65,9 +72,6 @@
       color: "#c9c042"
       castShadows: false
     - type: WiresPanel
-    - type: Wires
-      boardName: wires-board-name-smes
-      layoutId: SMES
     - type: Machine
       board: SMESMachineCircuitboard
     - type: StationInfiniteBatteryTarget
@@ -79,8 +83,8 @@
       highVoltageNode: input
       mediumVoltageNode: output
     - type: Damageable
-      damageContainer: Inorganic
-      damageModifierSet: StrongMetallic
+      damageContainer: StructuralInorganic
+      damageModifierSet: StructuralMetallicStrong
     - type: BatterySensor
     - type: DeviceNetwork
       deviceNetId: AtmosDevices
@@ -96,7 +100,7 @@
 - type: entity
   parent: BaseSMES
   id: SMESBasic
-  suffix: Basic, 8MW
+  suffix: Basic, 8MJ
   components:
   - type: Battery
     maxCharge: 8000000

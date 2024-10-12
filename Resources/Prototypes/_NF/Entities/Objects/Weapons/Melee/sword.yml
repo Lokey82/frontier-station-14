@@ -17,14 +17,10 @@
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Reflect
-    enabled: true
     reflectProb: .1
     spread: 90
   - type: Item
     sprite: _NF/Objects/Weapons/Melee/armingsword.rsi
-  - type: Tag
-    tags:
-    - WeaponMelee
   - type: DisarmMalus
   - type: Clothing
     quickEquip: false

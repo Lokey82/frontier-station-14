@@ -33,12 +33,27 @@ namespace Content.Shared.Lathe
         [DataField]
         public SoundSpecifier? ProducingSound;
 
-        #region Visualizer info
-        [DataField(required: true)]
-        public string IdleState = default!;
+        [DataField]
+        public string? ReagentOutputSlotId;
 
-        [DataField(required: true)]
-        public string RunningState = default!;
+        /// <summary>
+        /// The default amount that's displayed in the UI for selecting the print amount.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public int DefaultProductionAmount = 1;
+
+        #region Visualizer info
+        [DataField]
+        public string? IdleState;
+
+        [DataField]
+        public string? RunningState;
+
+        [DataField]
+        public string? UnlitIdleState;
+
+        [DataField]
+        public string? UnlitRunningState;
         #endregion
 
         /// <summary>
@@ -47,19 +62,34 @@ namespace Content.Shared.Lathe
         [ViewVariables]
         public LatheRecipePrototype? CurrentRecipe;
 
-        /// <summary>
-        /// Whether the lathe can eject the materials stored within it
-        /// </summary>
-        [DataField]
-        public bool CanEjectStoredMaterials = true;
-
         #region MachineUpgrading
         /// <summary>
         /// A modifier that changes how long it takes to print a recipe
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float TimeMultiplier = 1;
 
+        /// <summary>
+        /// A modifier that changes how much of a material is needed to print a recipe
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+        public float MaterialUseMultiplier = 1;
+
+        /// <summary>
+        /// A modifier that changes how long it takes to print a recipe
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
+        public float FinalTimeMultiplier = 1;
+
+        /// <summary>
+        /// A modifier that changes how much of a material is needed to print a recipe
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
+        public float FinalMaterialUseMultiplier = 1;
+
+        public const float DefaultPartRatingMaterialUseMultiplier = 0.85f; // Frontier: restored for machine parts
+
+        //Frontier Upgrade Code Restore
         /// <summary>
         /// The machine part that reduces how long it takes to print a recipe.
         /// </summary>
@@ -73,24 +103,18 @@ namespace Content.Shared.Lathe
         public float PartRatingPrintTimeMultiplier = 0.5f;
 
         /// <summary>
-        /// A modifier that changes how much of a material is needed to print a recipe
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-        public float MaterialUseMultiplier = 1;
-
-        /// <summary>
         /// The machine part that reduces how much material it takes to print a recipe.
         /// </summary>
         [DataField]
         public ProtoId<MachinePartPrototype> MachinePartMaterialUse = "MatterBin";
 
+        // Frontier: restored for machine part upgrades
         /// <summary>
         /// The value that is used to calculate the modifier <see cref="MaterialUseMultiplier"/>
         /// </summary>
         [DataField]
         public float PartRatingMaterialUseMultiplier = DefaultPartRatingMaterialUseMultiplier;
-
-        public const float DefaultPartRatingMaterialUseMultiplier = 0.85f;
+        // End Frontier
         #endregion
     }
 
@@ -98,11 +122,20 @@ namespace Content.Shared.Lathe
     {
         public readonly EntityUid Lathe;
 
-        public List<ProtoId<LatheRecipePrototype>> Recipes = new();
+        public bool getUnavailable;
 
-        public LatheGetRecipesEvent(EntityUid lathe)
+        public HashSet<ProtoId<LatheRecipePrototype>> Recipes = new();
+
+        public LatheGetRecipesEvent(EntityUid lathe, bool forced)
         {
             Lathe = lathe;
+            getUnavailable = forced;
         }
     }
+
+    /// <summary>
+    /// Event raised on a lathe when it starts producing a recipe.
+    /// </summary>
+    [ByRefEvent]
+    public readonly record struct LatheStartPrintingEvent(LatheRecipePrototype Recipe);
 }

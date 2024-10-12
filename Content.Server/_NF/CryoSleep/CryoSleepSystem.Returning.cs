@@ -5,7 +5,7 @@ using Content.Shared.Bed.Sleep;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
-using Content.Shared.NF14.CCVar;
+using Content.Shared._NF.CCVar;
 using Content.Shared.Players;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
@@ -48,7 +48,7 @@ public sealed partial class CryoSleepSystem
     /// </summary>
     public ReturnToBodyStatus TryReturnToBody(MindComponent mind, bool force = false)
     {
-        if (!_configurationManager.GetCVar(NF14CVars.CryoReturnEnabled))
+        if (!_configurationManager.GetCVar(NFCCVars.CryoReturnEnabled))
             return ReturnToBodyStatus.Disabled;
 
         var id = mind.UserId;
@@ -63,14 +63,14 @@ public sealed partial class CryoSleepSystem
             return ReturnToBodyStatus.CryopodMissing;
 
         var body = storedBody.Value.Body;
-        if (IsOccupied(cryoComp) || !cryoComp.BodyContainer.Insert(body, EntityManager))
+        if (IsOccupied(cryoComp) || !_container.Insert(body, cryoComp.BodyContainer))
             return ReturnToBodyStatus.Occupied;
 
         _storedBodies.Remove(id.Value);
         _mind.ControlMob(id.Value, body);
         // Force the mob to sleep
         var sleep = EnsureComp<SleepingComponent>(body);
-        sleep.CoolDownEnd = TimeSpan.FromSeconds(5);
+        sleep.CooldownEnd = TimeSpan.FromSeconds(5);
 
         _popup.PopupEntity(Loc.GetString("cryopod-wake-up", ("entity", body)), body);
 
